@@ -1,0 +1,75 @@
+CREATE DATABASE ELECCIONES
+
+
+
+CREATE TABLE Partido_Politico
+(
+id_partido INT,
+nombre_partido VARCHAR(30) UNIQUE,
+ideales VARCHAR (100) NOT NULL, 
+CONSTRAINT PK_id_partido PRIMARY KEY(id_partido)
+
+)
+
+CREATE TABLE Candidatos
+(
+id_candidato INT,
+id_partido INT,
+plataforma VARCHAR (100) NOT NULL,
+CONSTRAINT PK_Id_Candidato PRIMARY KEY (id_candidato),
+CONSTRAINT FK_Id_partido FOREIGN KEY (id_partido) REFERENCES Partido_Politico(id_partido)
+
+)
+
+CREATE TABLE Votante 
+(
+id_votante INT,
+nombre VARCHAR (30),
+apellido VARCHAR (30),
+edad INT DEFAULT 18
+CONSTRAINT PK_Id_Volante PRIMARY KEY (id_votante)
+
+
+)
+
+CREATE TABLE VOTOS 
+(
+id_voto INT,
+id_candidato INT,
+fecha DATE DEFAULT GETDATE(),	
+id_votante INT,
+CONSTRAINT PK_Id_Voto PRIMARY KEY (id_voto),
+CONSTRAINT FK_Id_candidato FOREIGN KEY (id_candidato) REFERENCES Candidatos(id_candidato),
+CONSTRAINT FK_Id_Votante FOREIGN KEY (id_votante) REFERENCES Votante(id_votante)
+
+)
+
+ALTER TABLE Votante
+Add Eleccion Int 
+CONSTRAINT FK_Eleccion FOREIGN KEY (Eleccion) REFERENCES Candidatos(id_candidato)
+
+INSERT INTO Partido_Politico (id_partido, nombre_partido, ideales) VALUES (1, 'NuestraTierra', 'Igualdad de derechos')
+
+Select * from Votante
+
+INSERT INTO Partido_Politico (id_partido, nombre_partido, ideales) VALUES (3, 'Educacion y Avance', 'Todos deben tener educacion')
+
+CREATE TABLE VotosResultados 
+(
+id_voto INT IDENTITY (1,1),
+id_candidato INT,
+fecha DATE DEFAULT GETDATE(),	
+id_votante INT,
+CONSTRAINT PK_Id_Voto PRIMARY KEY (id_voto),
+CONSTRAINT FK_Id_candidato FOREIGN KEY (id_candidato) REFERENCES Candidatos(id_candidato),
+CONSTRAINT FK_Id_Votante FOREIGN KEY (id_votante) REFERENCES Votante(id_votante)
+
+)
+
+select * from VotosResultados
+select * from Candidatos
+select * from Partido_Politico
+select * from Votante
+
+delete from Candidatos where id_candidato=  3
+
